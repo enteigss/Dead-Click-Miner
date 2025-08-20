@@ -84,6 +84,11 @@ export default function InsightsPage() {
     router.push('/');
   };
 
+  const handlePreviewClick = () => {
+    const previewUrl = `${STORE_URL}${pagePath}?dead_click_preview=true`;
+    window.open(previewUrl, '_blank');
+  };
+
   return (
     <Page
       title={`Dead Clicks: ${pagePath}`}
@@ -91,6 +96,12 @@ export default function InsightsPage() {
         content: 'Back to overview',
         onAction: handleBackClick,
       }}
+      secondaryActions={[
+        {
+          content: 'Preview Mode',
+          onAction: handlePreviewClick,
+        },
+      ]}
     >
       <Card>
         <ResourceList

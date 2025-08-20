@@ -10,6 +10,8 @@ interface ClickData {
   store_url: string
   page_path: string
   target_selector: string
+  click_x: number
+  click_y: number
 }
 
 export async function POST(request: NextRequest) {
@@ -35,7 +37,22 @@ export async function POST(request: NextRequest) {
 
     if (typeof body.store_url !== 'string' || typeof body.page_path !== 'string' || typeof body.target_selector !== 'string') {
       return NextResponse.json(
-        { error: 'All fields must be strings' },
+        { error: 'store_url, page_path, and target_selector must be strings' },
+        { status: 400, headers: corsHeaders }
+      )
+    }
+
+    // Validate coordinates (optional but must be valid if provided)
+    if (body.click_x !== undefined && (typeof body.click_x !== 'number' || body.click_x < 0 || body.click_x > 1)) {
+      return NextResponse.json(
+        { error: 'click_x must be a number between 0 and 1' },
+        { status: 400, headers: corsHeaders }
+      )
+    }
+
+    if (body.click_y !== undefined && (typeof body.click_y !== 'number' || body.click_y < 0 || body.click_y > 1)) {
+      return NextResponse.json(
+        { error: 'click_y must be a number between 0 and 1' },
         { status: 400, headers: corsHeaders }
       )
     }
@@ -48,6 +65,8 @@ export async function POST(request: NextRequest) {
           store_url: body.store_url.trim(),
           page_path: body.page_path.trim(),
           target_selector: body.target_selector.trim(),
+          click_x: body.click_x,
+          click_y: body.click_y,
           created_at: new Date().toISOString()
         }
       ])
