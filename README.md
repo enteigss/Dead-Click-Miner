@@ -49,6 +49,7 @@ Create `.env.local` with your Supabase credentials:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+NEXT_PUBLIC_STORE_URL=https://your-store.myshopify.com/
 ```
 
 ### 3. Database Setup
@@ -100,11 +101,7 @@ Visit `http://localhost:3000` to see the dashboard.
 
 ### Update Store URL
 
-In `src/app/insights/[...path]/page.tsx`, update the hardcoded store URL:
-
-```typescript
-const STORE_URL = 'https://your-store.myshopify.com/'; // Replace with your store
-```
+The store URL is now configured via environment variable. Make sure to set `NEXT_PUBLIC_STORE_URL` in your `.env.local` file.
 
 ### Customize Click Detection
 

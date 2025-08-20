@@ -17,7 +17,7 @@ export default function InsightsPage() {
   const [pagePath, setPagePath] = useState<string>('');
   const router = useRouter();
   const searchParams = useSearchParams();
-  const STORE_URL = 'https://test-shop-12345678910.myshopify.com/'
+  const STORE_URL = process.env.NEXT_PUBLIC_STORE_URL || 'https://your-store.myshopify.com'
 
   useEffect(() => {
     const path = searchParams.get('path');
