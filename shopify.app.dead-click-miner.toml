@@ -1,0 +1,26 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "3bf56d56ed084d931cb2cc2537f52609"
+name = "Dead Click Miner"
+application_url = "https://dead-click-miner.vercel.app"
+embedded = true
+handle = "dead-click-miner-1"
+
+[build]
+include_config_on_deploy = true
+
+[webhooks]
+api_version = "2025-07"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_products,read_script_tags,write_products,write_script_tags"
+
+[auth]
+redirect_urls = [ 
+  "http://localhost:3000/api/auth/callback",
+  "https://dead-click-miner.vercel.app/api/auth/callback"
+]
+
+[pos]
+embedded = false
