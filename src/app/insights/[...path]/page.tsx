@@ -70,7 +70,7 @@ export default function InsightsPage() {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Badge tone="critical">
-              {click_count} {click_count === 1 ? 'click' : 'clicks'}
+              {`${click_count} ${click_count === 1 ? 'click' : 'clicks'}`}
             </Badge>
             <Button size="micro" onClick={handleTestSelector}>
               Test Selector
