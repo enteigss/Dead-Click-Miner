@@ -86,7 +86,7 @@ export default function InsightsPage() {
   };
 
   const handlePreviewClick = () => {
-    const previewUrl = `${STORE_URL}${pagePath}?dead_click_preview=true`;
+    const previewUrl = `${STORE_URL}${pagePath}?preview_theme_id=${180253327639}&dead_click_preview=true`;
     window.open(previewUrl, '_blank');
   };
 
@@ -99,7 +99,7 @@ export default function InsightsPage() {
       }}
       secondaryActions={[
         {
-          content: 'Preview Mode',
+          content: 'Preview Mode HA',
           onAction: handlePreviewClick,
         },
       ]}
