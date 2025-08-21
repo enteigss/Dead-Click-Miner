@@ -36,10 +36,15 @@ export default function Home() {
   const renderItem = (item: PageInsight) => {
     const { page_path, click_count } = item;
     
+    const handleItemClick = () => {
+      // Click handled by Link component inside
+    };
+    
     return (
       <ResourceList.Item
         id={page_path}
         accessibilityLabel={`View details for ${page_path}`}
+        onClick={handleItemClick}
       >
         <Link href={`/insights/${encodeURIComponent(page_path)}?path=${encodeURIComponent(page_path)}`} style={{ textDecoration: 'none', color: 'inherit' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
