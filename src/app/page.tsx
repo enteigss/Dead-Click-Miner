@@ -52,7 +52,7 @@ export default function Home() {
               {page_path}
             </Text>
             <Badge tone="attention">
-              {click_count} dead clicks
+              {`${click_count} dead clicks`}
             </Badge>
           </div>
         </Link>
