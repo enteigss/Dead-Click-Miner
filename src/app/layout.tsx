@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import '@shopify/polaris/build/esm/styles.css';
 import PolarisProvider from '../components/PolarisProvider';
 import "./globals.css";
+import { Suspense } from 'react';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,9 +33,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} ${inter.variable}`}>
-        <PolarisProvider>
-          {children}
-        </PolarisProvider>
+        <Suspense fallback={<div>Loading...</div>}>
+          <PolarisProvider>
+            {children}
+          </PolarisProvider>
+        </Suspense>
       </body>
     </html>
   );
