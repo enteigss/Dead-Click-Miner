@@ -1,5 +1,6 @@
 import { shopifyApi, LATEST_API_VERSION } from '@shopify/shopify-api';
 import { restResources } from '@shopify/shopify-api/rest/admin/2024-10';
+import '@shopify/shopify-api/adapters/node';
 
 const shopify = shopifyApi({
   apiKey: process.env.SHOPIFY_API_KEY!,
