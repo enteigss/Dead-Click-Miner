@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { Page, Card, ResourceList, Text, Badge, Button } from '@shopify/polaris';
 import { ArrowLeftIcon } from '@shopify/polaris-icons';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { getSessionToken } from '@shopify/app-bridge-utils';
+import { useAppBridge } from '@/components/AppBridgeProvider';
 
 interface SelectorInsight {
   target_selector: string;
@@ -17,6 +19,7 @@ export default function InsightsPage() {
   const [pagePath, setPagePath] = useState<string>('');
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { app, ready } = useAppBridge();
   const STORE_URL = process.env.NEXT_PUBLIC_STORE_URL || 'https://your-store.myshopify.com'
 
   useEffect(() => {
@@ -85,9 +88,35 @@ export default function InsightsPage() {
     router.push('/');
   };
 
-  const handlePreviewClick = () => {
-    const previewUrl = `${STORE_URL}${pagePath}?preview_theme_id=${180253327639}&dead_click_preview=true`;
-    window.open(previewUrl, '_blank');
+  const handlePreviewClick = async () => {
+    if (!app || !ready) {
+      console.error('App Bridge not ready');
+      return;
+    }
+
+    try {
+      const sessionToken = await getSessionToken(app);
+      
+      const response = await fetch('/api/get-theme-id', {
+        headers: {
+          'Authorization': `Bearer ${sessionToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to get theme ID');
+      }
+      
+      const { themeId } = await response.json();
+      const previewUrl = `${STORE_URL}${pagePath}?preview_theme_id=${themeId}&dead_click_preview=true`;
+      window.open(previewUrl, '_blank');
+    } catch (error) {
+      console.error('Failed to get theme ID:', error);
+      // Fallback to admin preview
+      const previewUrl = `${STORE_URL}/admin/themes/current/preview?path=${encodeURIComponent(pagePath)}&dead_click_preview=true`;
+      window.open(previewUrl, '_blank');
+    }
   };
 
   return (

@@ -13,6 +13,10 @@ export async function GET(request: NextRequest) {
     if (!session) {
       return NextResponse.json({ error: 'No session created' }, { status: 400 });
     }
+
+    // Store session for later use
+    global.shopifySessions = global.shopifySessions || {};
+    global.shopifySessions[session.shop] = session;
     try {
       // First script
       const scriptTag1 = new shopify.rest.ScriptTag({ session });
